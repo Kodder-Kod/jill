@@ -45,10 +45,7 @@ const Register = () => {
 
   const registerUser = async () => {
 
-
-
     let userAccountId = null
-
 
     if (adminPassword.length < 6) {
 
@@ -97,22 +94,25 @@ const Register = () => {
             useUserName.setState({ userName: adminName })
             useUserEmail.setState({ userEmail: adminEmail })
 
-              .then(() => {
-                const dbRef = ref(db, `user/accounts/`);
-                const newAdminRef = push(dbRef, {
+            try {
+              const dbRef = ref(db, `user/accounts/`);
+              const newAdminRef = push(dbRef, {
 
-                  Email: adminEmail,
-                  Id: userAccountId,
-                  Phone: adminPhone,
-                  Name: adminName,
+                Email: adminEmail,
+                Id: userAccountId,
+                Phone: adminPhone,
+                Name: adminName,
 
-                })
-                const newAdminKey = newAdminRef.key;
               })
+              const newAdminKey = newAdminRef.key;
+            }
+            catch {
 
-              .then(() => {
-                router.push('/');
-              })
+              console.log("did not open user / account")
+            }
+
+            const route = router.push('/');
+
 
             // Reset form fields
             setAdminName('');

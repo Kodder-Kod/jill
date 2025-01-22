@@ -11,6 +11,12 @@ import { useUserEmployee, useUserEmployeeTotal } from "@/app/componets/zustand/e
 import { useUserTheme } from "@/app/componets/zustand/theme";
 import { TbXboxX } from "react-icons/tb";
 import { TiTick } from "react-icons/ti";
+import { useUserItems, useUserItemsData, useUserItemsTotal } from "@/app/componets/zustand/items";
+import { useUserCategories, useUserCategoriesTotal } from "@/app/componets/zustand/categories";
+import { useUserSupplier, useUserSupplierTotal } from "@/app/componets/zustand/supplier";
+import { useUserSupplyItems, useUserSupplyItemsData, useUserSupplyItemsTotal } from "@/app/componets/zustand/supplyItems";
+import { useUserCart, useUserCartData, useUserCartTotal } from "@/app/componets/zustand/cart";
+import { useUserTicket, useUserTicketData, useUserTicketTotal } from "@/app/componets/zustand/ticket";
 
 
 
@@ -170,6 +176,24 @@ const Settings = () => {
                     useUserName.setState({ userName: "" });
                     useUserEmail.setState({ userEmail: "" });
                     useUserPhone.setState({ userPhone: "" });
+                    useUserEmployee.setState({ userEmployee: null })
+                    useUserEmployeeTotal.setState({ userEmployeeTotal: null })
+                    useUserItems.setState({ userItems: null })
+                    useUserItemsTotal.setState({ userItemsTotal: null })
+                    useUserItemsData.setState({ userItemsData: null })
+                    useUserCategories.setState({ userCategories: null })
+                    useUserCategoriesTotal.setState({ userCategoriesTotal: null })
+                    useUserSupplier.setState({ userSupplier: null })
+                    useUserSupplierTotal.setState({ userSupplierTotal: null })
+                    useUserSupplyItems.setState({ userSupplyItems: null })
+                    useUserSupplyItemsTotal.setState({ userSupplyItemsTotal: null })
+                    useUserSupplyItemsData.setState({ userSupplyItemsData: null })
+                    useUserCart.setState({ userCart: null })
+                    useUserCartData.setState({ userCartData: null })
+                    useUserCartTotal.setState({ userCartTotal: null })
+                    useUserTicket.setState({ userTicket: null })
+                    useUserTicketData.setState({ userTicketData: null })
+                    useUserTicketTotal.setState({ userTicketTotal: null })
                 })
 
         } catch (error) {
