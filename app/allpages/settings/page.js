@@ -43,88 +43,105 @@ const Settings = () => {
 
     /// Edit profile 
     const editProfile = () => {
-        if (userName && userEmail && userPhone) {
-            try {
-                const dbRef = ref(db, `web/pos/${Id}`);
-                const newbranchRef = update(dbRef, {
 
-                    Name: userName,
-                    Email: userEmail,
-                    Phone: userPhone,
+        if (Id) {
 
-                });
+            if (userName && userEmail && userPhone) {
+                try {
+                    const dbRef = ref(db, `web/pos/${Id}`);
+                    const newbranchRef = update(dbRef, {
 
-                const newCreditKey = newbranchRef.key;
-                setUserName('')
-                setUserEmail('')
-                setUserPhone('')
-                editAdminsuccessFun()
+                        Name: userName,
+                        Email: userEmail,
+                        Phone: userPhone,
+
+                    });
+
+                    const newCreditKey = newbranchRef.key;
+                    setUserName('')
+                    setUserEmail('')
+                    setUserPhone('')
+                    editAdminsuccessFun()
+                }
+                catch {
+                    console.log('did not edit')
+                    editAdminFailFun()
+                }
             }
-            catch {
-                console.log('did not edit')
-                editAdminFailFun()
+            else {
+                console.log('fill all fields')
+                editAdminFailBlankFun()
             }
+
         }
-        else {
-            console.log('fill all fields')
-            editAdminFailBlankFun()
-        }
+
     };
 
     //// Add Employee
     const handleAddEmployee = () => {
-        if (employeeName && employeePhoneInput) {
-            try {
-                const dbRef = ref(db, `web/pos/${Id}/employees`);
-                const newbranchRef = push(dbRef, {
 
-                    Name: employeeName,
-                    Phone: employeePhoneInput,
-                });
+        if (Id) {
 
-                const newCreditKey = newbranchRef.key;
+            if (employeeName && employeePhoneInput) {
+                try {
+                    const dbRef = ref(db, `web/pos/${Id}/employees`);
+                    const newbranchRef = push(dbRef, {
 
-                setEmployeeName('')
-                setemployeePhoneInput('')
-                addEmployeesuccessFun()
+                        Name: employeeName,
+                        Phone: employeePhoneInput,
+                    });
+
+                    const newCreditKey = newbranchRef.key;
+
+                    setEmployeeName('')
+                    setemployeePhoneInput('')
+                    addEmployeesuccessFun()
+                }
+                catch {
+                    console.log('did not Add employee')
+                    addEmployeeFailFun()
+                }
             }
-            catch {
-                console.log('did not Add employee')
-                addEmployeeFailFun()
+            else {
+                console.log('fill all fields')
+                addEmployeeFailBlankFun()
             }
+
         }
-        else {
-            console.log('fill all fields')
-            addEmployeeFailBlankFun()
-        }
+
     };
 
     const handleRemoveEmployee = (id) => {
 
-        if (employeestotal == 1) {
+        if (Id) {
+            if (employeestotal == 1) {
 
-            remove(ref(db, `web/pos/${Id}/employees`)).then(() => {
+                remove(ref(db, `web/pos/${Id}/employees`)).then(() => {
 
-                useUserEmployee.setState({ userEmployee: null });
-                useUserEmployeeTotal.setState({ userEmployeeTotal: null });
-                deleteEmployeesuccessFun()
-            })
-                .catch((error) => {
-                    deleteEmployeeFailFun()
-                });
+                    useUserEmployee.setState({ userEmployee: null });
+                    useUserEmployeeTotal.setState({ userEmployeeTotal: null });
+                    deleteEmployeesuccessFun()
+                })
+                    .catch((error) => {
+                        deleteEmployeeFailFun()
+                    });
 
-        } else {
+            } else {
 
-            remove(ref(db, `web/pos/${Id}/employees/${id}`)).then(() => {
+                remove(ref(db, `web/pos/${Id}/employees/${id}`)).then(() => {
 
-                deleteEmployeesuccessFun()
-            })
-                .catch((error) => {
+                    deleteEmployeesuccessFun()
+                })
+                    .catch((error) => {
 
-                    deleteEmployeeFailFun()
+                        deleteEmployeeFailFun()
 
-                });
+                    });
+            }
+
+
         }
+
 
     };
 

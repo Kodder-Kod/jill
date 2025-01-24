@@ -6,7 +6,7 @@ import { db } from "../../../config";
 import { MdEmail } from "react-icons/md"
 import { GiPadlock } from "react-icons/gi";
 import { GiDialPadlock } from "react-icons/gi";
-import { FaBoxOpen,FaBox, FaDollarSign, FaPhoneAlt, FaSearch, FaTag, FaTags } from "react-icons/fa";
+import { FaBoxOpen, FaBox, FaDollarSign, FaPhoneAlt, FaSearch, FaTag, FaTags } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { FaUser, FaTerminal, FaClock } from "react-icons/fa";
 import { useUserItems, useUserItemsTotal } from '@/app/componets/zustand/items';
@@ -99,40 +99,36 @@ const Inventory = () => {
 
 
 
-    //auto close modal 
-    const handleOpenAutoCloseModal = () => {
-        setShowAutoCloseModal(true);
-        setTimeout(() => setShowAutoCloseModal(false), 3000);
-    };
-
-
     ///// Category operations
     const addCategory = () => {
 
-        if (catName) {
-            try {
-                const dbRef = ref(db, `web/pos/${Id}/categories/`);
+        if (Id) {
 
-                const newbranchRef = push(dbRef, {
+            if (catName) {
+                try {
+                    const dbRef = ref(db, `web/pos/${Id}/categories/`);
 
-                    Name: catName,
+                    const newbranchRef = push(dbRef, {
 
-                });
-                const newCreditKey = newbranchRef.key;
+                        Name: catName,
 
-                catModalFun()
-                addCatsuccessFun()
+                    });
+                    const newCreditKey = newbranchRef.key;
+
+                    catModalFun()
+                    addCatsuccessFun()
+                }
+                catch {
+                    console.log('did not add category')
+                    catModalFunEdit()
+                    addCatFailFun()
+                }
             }
-            catch {
-                console.log('did not add category')
+            else {
                 catModalFunEdit()
-                addCatFailFun()
+                addCatFailBlankFun()
             }
-        }
 
-        else {
-            catModalFunEdit()
-            addCatFailBlankFun()
         }
 
     };
@@ -150,31 +146,37 @@ const Inventory = () => {
 
     const deleteCategory = () => {
 
-        if (categoriesTotal == 1) {
 
-            remove(ref(db, `web/pos/${Id}/categories`)).then(() => {
+        if (Id) {
 
-                useUserCategories.setState({ userCategories: null });
-                useUserCategoriesTotal.setState({ userCategoriesTotal: null });
-                catModalFunDelete()
-                deleteCatsuccessFun()
+            if (categoriesTotal == 1) {
 
-            })
-                .catch((error) => {
+                remove(ref(db, `web/pos/${Id}/categories`)).then(() => {
+
+                    useUserCategories.setState({ userCategories: null });
+                    useUserCategoriesTotal.setState({ userCategoriesTotal: null });
                     catModalFunDelete()
-                    deleteCatFailFun()
-                });
+                    deleteCatsuccessFun()
 
-        } else {
-            remove(ref(db, `web/pos/${Id}/categories/${catDeleteID}`)).then(() => {
-                catModalFunDelete()
-                deleteCatsuccessFun()
-            })
-                .catch((error) => {
+                })
+                    .catch((error) => {
+                        catModalFunDelete()
+                        deleteCatFailFun()
+                    });
+
+            } else {
+                remove(ref(db, `web/pos/${Id}/categories/${catDeleteID}`)).then(() => {
                     catModalFunDelete()
-                    deleteCatFailFun()
-                });
+                    deleteCatsuccessFun()
+                })
+                    .catch((error) => {
+                        catModalFunDelete()
+                        deleteCatFailFun()
+                    });
+            }
         }
+
+
     };
 
 
@@ -190,32 +192,35 @@ const Inventory = () => {
 
     const editCategories = (id) => {
 
+        if (Id) {
 
-        if (catName) {
+            if (catName) {
 
-            try {
-                const dbRef = ref(db, `web/pos/${Id}/categories/${catEditID}`);
-                const newbranchRef = update(dbRef, {
+                try {
+                    const dbRef = ref(db, `web/pos/${Id}/categories/${catEditID}`);
+                    const newbranchRef = update(dbRef, {
 
-                    Name: catName,
+                        Name: catName,
 
-                });
+                    });
 
-                const newCreditKey = newbranchRef.key;
+                    const newCreditKey = newbranchRef.key;
 
+                    catModalFunEdit()
+                    editCatsuccessFun()
+
+                }
+                catch {
+                    console.log('did not edit category')
+                    catModalFunEdit()
+                    editCatFailFun()
+                }
+            }
+            else {
                 catModalFunEdit()
-                editCatsuccessFun()
+                addCatFailBlankFun()
 
             }
-            catch {
-                console.log('did not edit category')
-                catModalFunEdit()
-                editCatFailFun()
-            }
-        }
-        else {
-            catModalFunEdit()
-            addCatFailBlankFun()
 
         }
 
@@ -224,35 +229,39 @@ const Inventory = () => {
     ////// Handlers for item operations
     const addItem = () => {
 
+        if (Id) {
 
-        if (itemName && itemPrice && ItemCategory && itemStock) {
-            try {
-                const dbRef = ref(db, `web/pos/${Id}/items/`);
+            if (itemName && itemPrice && ItemCategory && itemStock) {
+                try {
+                    const dbRef = ref(db, `web/pos/${Id}/items/`);
 
-                const newbranchRef = push(dbRef, {
+                    const newbranchRef = push(dbRef, {
 
-                    Name: itemName,
-                    Price: itemPrice,
-                    Stock: itemStock,
-                    Category: ItemCategory,
+                        Name: itemName,
+                        Price: itemPrice,
+                        Stock: itemStock,
+                        Category: ItemCategory,
 
-                });
-                const newCreditKey = newbranchRef.key;
+                    });
+                    const newCreditKey = newbranchRef.key;
 
-                itemModalFun()
-                addItemsuccessFun()
+                    itemModalFun()
+                    addItemsuccessFun()
 
+                }
+                catch {
+                    console.log("did not add item ")
+                    itemModalFun()
+                    addItemFailFun()
+                }
             }
-            catch {
-                console.log("did not add item ")
+            else {
                 itemModalFun()
-                addItemFailFun()
+                addItemFailBlankFun()
             }
         }
-        else {
-            itemModalFun()
-            addItemFailBlankFun()
-        }
+
+
     };
 
 
@@ -268,35 +277,39 @@ const Inventory = () => {
 
     const deleteItem = () => {
 
-        if (itemsTotal == 1) {
+        if (Id) {
 
-            remove(ref(db, `web/pos/${Id}/items`)).then(() => {
+            if (itemsTotal == 1) {
 
-                useUserItems.setState({ userItems: null });
-                useUserItemsTotal.setState({ userItemsTotal: null });
+                remove(ref(db, `web/pos/${Id}/items`)).then(() => {
 
-                itemModalFunDelete()
-                deleteItemsuccessFun()
-
-            })
-                .catch((error) => {
+                    useUserItems.setState({ userItems: null });
+                    useUserItemsTotal.setState({ userItemsTotal: null });
 
                     itemModalFunDelete()
-                    deleteItemFailFun()
+                    deleteItemsuccessFun()
 
-                });
+                })
+                    .catch((error) => {
 
-        } else {
-            remove(ref(db, `web/pos/${Id}/items/${itemdeleteID}`)).then(() => {
-                itemModalFunDelete()
-                deleteItemsuccessFun()
+                        itemModalFunDelete()
+                        deleteItemFailFun()
 
-            })
-                .catch((error) => {
+                    });
+
+            } else {
+                remove(ref(db, `web/pos/${Id}/items/${itemdeleteID}`)).then(() => {
                     itemModalFunDelete()
-                    deleteItemFailFun()
-                });
+                    deleteItemsuccessFun()
+
+                })
+                    .catch((error) => {
+                        itemModalFunDelete()
+                        deleteItemFailFun()
+                    });
+            }
         }
+
 
     };
 
@@ -313,32 +326,35 @@ const Inventory = () => {
 
     const editItem = () => {
 
+        if (Id) {
 
-        try {
-            const dbRef = ref(db, `web/pos/${Id}/items/${itemEditID}`);
-            const newbranchRef = update(dbRef, {
+            try {
+                const dbRef = ref(db, `web/pos/${Id}/items/${itemEditID}`);
+                const newbranchRef = update(dbRef, {
 
-                Name: itemName,
-                Price: itemPrice,
-                Stock: itemStock,
-                Category: ItemCategory,
+                    Name: itemName,
+                    Price: itemPrice,
+                    Stock: itemStock,
+                    Category: ItemCategory,
 
-            });
-            const newCreditKey = newbranchRef.key;
+                });
+                const newCreditKey = newbranchRef.key;
 
-            itemModalFunEdit()
-            editItemsuccessFun()
+                itemModalFunEdit()
+                editItemsuccessFun()
+            }
+            catch {
+                console.log("did not edit item")
+                itemModalFunEdit()
+                editItemFailFun()
+            }
+
+            // else {
+            //   itemModalFunEdit()
+            // addItemFailBlankFun()
+            // }
         }
-        catch {
-            console.log("did not edit item")
-            itemModalFunEdit()
-            editItemFailFun()
-        }
 
-        // else {
-        //   itemModalFunEdit()
-        // addItemFailBlankFun()
-        // }
 
     };
 

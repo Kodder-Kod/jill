@@ -156,95 +156,103 @@ const Dashboard = () => {
   ///ticket function 
   const handleticket = () => {
 
-    if (selectEmployee && cart && ticketName) {
-      if (total == 0) {
+    if (Id) {
 
-        console.log("total is zero")
-        ticketfailTotal()
+      if (selectEmployee && cart && ticketName) {
+        if (total == 0) {
+
+          console.log("total is zero")
+          ticketfailTotal()
+        }
+
+        else {
+          try {
+            const dbRef = ref(db, `web/pos/${Id}/ticket/`);
+
+            const newbranchRef = push(dbRef, {
+
+              Name: ticketName,
+              EmployeeID: selectEmployee,
+              Cart: cart,
+              Total: total,
+              Date: Date.now()
+
+            });
+            const newCreditKey = newbranchRef.key;
+
+            ticketModalFun()
+            handleCancel()
+            ticketSuccess()
+            updateStockInDatabase();
+
+          }
+          catch {
+            console.log("did not send to DB")
+            ticketModalFun()
+            ticketFail()
+          }
+        }
       }
 
       else {
-        try {
-          const dbRef = ref(db, `web/pos/${Id}/ticket/`);
 
-          const newbranchRef = push(dbRef, {
-
-            Name: ticketName,
-            EmployeeID: selectEmployee,
-            Cart: cart,
-            Total: total,
-            Date: Date.now()
-
-          });
-          const newCreditKey = newbranchRef.key;
-
-          ticketModalFun()
-          handleCancel()
-          ticketSuccess()
-          updateStockInDatabase();
-
-        }
-        catch {
-          console.log("did not send to DB")
-          ticketModalFun()
-          ticketFail()
-        }
+        console.log("did not select employee ")
+        ticketModalFun()
+        ticketFailEmployee()
       }
     }
 
-    else {
 
-      console.log("did not select employee ")
-      ticketModalFun()
-      ticketFailEmployee()
-
-
-    }
   };
 
 
   //// send cart to the database 
   const handleSend = () => {
 
-    if (selectEmployee && cart) {
-      if (total == 0) {
+    if (Id) {
 
-        console.log("total is zero")
-        sendFailTotal()
+      if (selectEmployee && cart) {
+        if (total == 0) {
+
+          console.log("total is zero")
+          sendFailTotal()
+        }
+
+        else {
+          try {
+            const dbRef = ref(db, `web/pos/${Id}/cart/`);
+
+            const newbranchRef = push(dbRef, {
+
+              EmployeeID: selectEmployee,
+              Cart: cart,
+              Total: total,
+              Date: Date.now()
+
+            });
+            const newCreditKey = newbranchRef.key;
+
+            sendModalFun()
+            handleCancel()
+            sendSuccess()
+            updateStockInDatabase(Id);
+          }
+          catch (error) {
+            console.log(error)
+            sendModalFun()
+            sendFail()
+          }
+        }
       }
 
       else {
-        try {
-          const dbRef = ref(db, `web/pos/${Id}/cart/`);
-
-          const newbranchRef = push(dbRef, {
-
-            EmployeeID: selectEmployee,
-            Cart: cart,
-            Total: total,
-            Date: Date.now()
-
-          });
-          const newCreditKey = newbranchRef.key;
-
-          sendModalFun()
-          handleCancel()
-          sendSuccess()
-          updateStockInDatabase();
-        }
-        catch (error) {
-          console.log(error)
-          sendModalFun()
-          sendFail()
-        }
+        console.log("did not select employee ")
+        sendModalFun()
+        sendFailEmployee()
       }
     }
 
-    else {
-      console.log("did not select employee ")
-      sendModalFun()
-      sendFailEmployee()
-    }
+
   };
 
   const handleCancel = () => {
@@ -254,17 +262,19 @@ const Dashboard = () => {
 
 
   /// Update stock
-  const updateStockInDatabase = async () => {
+  const updateStockInDatabase = async (id) => {
     try {
       const updates = {};
       cart.forEach((cartItem) => {
-        updates[`web/pos/${Id}/items/${cartItem.id}/Stock`] = cartItem.Stock - cartItem.stock; // Update stock in the database
+        updates[`web/pos/${id}/items/${cartItem.id}/Stock`] = cartItem.Stock - cartItem.stock; // Update stock in the database
       });
       await update(ref(db), updates);
       console.log("Stock updated successfully");
     } catch (error) {
       console.error("Error updating stock:", error);
     }
+
+
   };
 
 

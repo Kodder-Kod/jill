@@ -165,36 +165,41 @@ const Suppliers = () => {
     ///// Suppliers
     const addSupplier = () => {
 
-        if (supplyName && supplyPhone && supplyEmail && supplyLocation) {
+        if (Id) {
+            if (supplyName && supplyPhone && supplyEmail && supplyLocation) {
 
-            try {
-                const dbRef = ref(db, `web/pos/${Id}/suppliers/`);
+                try {
+                    const dbRef = ref(db, `web/pos/${Id}/suppliers/`);
 
-                const newbranchRef = push(dbRef, {
+                    const newbranchRef = push(dbRef, {
 
-                    Name: supplyName,
-                    Phone: supplyPhone,
-                    Email: supplyEmail,
-                    Location: supplyLocation
+                        Name: supplyName,
+                        Phone: supplyPhone,
+                        Email: supplyEmail,
+                        Location: supplyLocation
 
-                });
-                const newCreditKey = newbranchRef.key;
+                    });
+                    const newCreditKey = newbranchRef.key;
 
-                supplyModalFun()
+                    supplyModalFun()
 
-                addSuppliersuccessFun()
+                    addSuppliersuccessFun()
+                }
+                catch {
+                    Console.log('did not add supplier')
+                    supplyModalFun()
+                    addSupplierFailFun()
+                }
             }
-            catch {
-                Console.log('did not add supplier')
+
+            else {
                 supplyModalFun()
-                addSupplierFailFun()
+                addSupplierFailBlankFun()
             }
+
         }
 
-        else {
-            supplyModalFun()
-            addSupplierFailBlankFun()
-        }
+
 
     };
 
@@ -211,34 +216,39 @@ const Suppliers = () => {
     }
 
 
-    const editSupplier = (id) => {
+    const editSupplier = () => {
 
-        if (supplyName && supplyPhone && supplyEmail && supplyLocation) {
-            try {
-                const dbRef = ref(db, `web/pos/${Id}/suppliers/${supplierEditID}`);
-                const newbranchRef = update(dbRef, {
+        if (Id) {
 
-                    Name: supplyName,
-                    Phone: supplyPhone,
-                    Email: supplyEmail,
-                    Location: supplyLocation
+            if (supplyName && supplyPhone && supplyEmail && supplyLocation) {
+                try {
+                    const dbRef = ref(db, `web/pos/${Id}/suppliers/${supplierEditID}`);
+                    const newbranchRef = update(dbRef, {
 
-                });
+                        Name: supplyName,
+                        Phone: supplyPhone,
+                        Email: supplyEmail,
+                        Location: supplyLocation
 
-                const newCreditKey = newbranchRef.key;
-                supplyModalFunEdit()
-                editSuppliersuccessFun()
+                    });
+
+                    const newCreditKey = newbranchRef.key;
+                    supplyModalFunEdit()
+                    editSuppliersuccessFun()
+                }
+                catch (error) {
+                    console.log(error)
+                    supplyModalFunEdit()
+                    editSupplierFailFun()
+                }
             }
-            catch (error) {
-                console.log(error)
+            else {
                 supplyModalFunEdit()
-                editSupplierFailFun()
+                addSupplierFailBlankFun()
             }
         }
-        else {
-            supplyModalFunEdit()
-            addSupplierFailBlankFun()
-        }
+
+
 
     };
 
@@ -257,63 +267,73 @@ const Suppliers = () => {
 
     const deleteSupplier = () => {
 
-        if (suppliersTotal == 1) {
+        if (Id) {
+            if (suppliersTotal == 1) {
 
-            remove(ref(db, `web/pos/${Id}/suppliers`)).then(() => {
+                remove(ref(db, `web/pos/${Id}/suppliers`)).then(() => {
 
-                useUserSupplier.setState({ userSupplier: null });
-                useUserSupplierTotal.setState({ userSupplierTotal: null });
-                supplyModalFunDelete()
-                deleteSuppliersuccessFun()
-            })
-                .catch((error) => {
+                    useUserSupplier.setState({ userSupplier: null });
+                    useUserSupplierTotal.setState({ userSupplierTotal: null });
                     supplyModalFunDelete()
-                    deleteSupplierFailFun()
-                });
+                    deleteSuppliersuccessFun()
+                })
+                    .catch((error) => {
+                        supplyModalFunDelete()
+                        deleteSupplierFailFun()
+                    });
 
-        } else {
-            remove(ref(db, `web/pos/${Id}/suppiers/${supplierdeleteID}`)).then(() => {
-                supplyModalFunDelete()
-                deleteSuppliersuccessFun()
-            })
-                .catch((error) => {
+            } else {
+                remove(ref(db, `web/pos/${Id}/suppiers/${supplierdeleteID}`)).then(() => {
                     supplyModalFunDelete()
-                    deleteSupplierFailFun()
-                });
+                    deleteSuppliersuccessFun()
+                })
+                    .catch((error) => {
+                        supplyModalFunDelete()
+                        deleteSupplierFailFun()
+                    });
+            }
+
         }
+
+
     };
 
 
     /// Items
     const addItem = () => {
 
-        if (itemName && itemPrice && itemStock && ItemSupplyId && itemStock && itemAmount) {
-            try {
-                const dbRef = ref(db, `web/pos/${Id}/supplierItems/`);
+        if (Id) {
 
-                const newbranchRef = push(dbRef, {
+            if (itemName && itemPrice && itemStock && ItemSupplyId && itemStock && itemAmount) {
+                try {
+                    const dbRef = ref(db, `web/pos/${Id}/supplierItems/`);
 
-                    Name: itemName,
-                    Price: itemPrice,
-                    Stock: itemStock,
-                    SupplierID: ItemSupplyId,
-                    Total: itemAmount,
-                    Date: Date.now()
-                    //////make sure you check on the date 
-                });
-                const newCreditKey = newbranchRef.key;
+                    const newbranchRef = push(dbRef, {
 
-                itemModalFun()
-                addItemsuccessFun()
+                        Name: itemName,
+                        Price: itemPrice,
+                        Stock: itemStock,
+                        SupplierID: ItemSupplyId,
+                        Total: itemAmount,
+                        Date: Date.now()
+                        //////make sure you check on the date 
+                    });
+                    const newCreditKey = newbranchRef.key;
+
+                    itemModalFun()
+                    addItemsuccessFun()
+                }
+                catch {
+                    console.log('did not add supplier ')
+                    addItemFailFun()
+                }
             }
-            catch {
-                console.log('did not add supplier ')
-                addItemFailFun()
+            else {
+                addItemFailBlankFun()
             }
         }
-        else {
-            addItemFailBlankFun()
-        }
+
+
     };
 
 
@@ -332,31 +352,34 @@ const Suppliers = () => {
 
     const deleteItem = () => {
 
-        if (itemsTotal == 1) {
+        if (Id) {
 
-            remove(ref(db, `web/pos/${Id}/supplierItems`)).then(() => {
+            if (itemsTotal == 1) {
 
-                useUserSupplyItems.setState({ userSupplyItems: null });
-                useUserSupplierTotal.setState({ userSupplyItemsTotal: null });
-                itemModalFunDelete()
-                deleteItemsuccessFun()
-            })
-                .catch((error) => {
+                remove(ref(db, `web/pos/${Id}/supplierItems`)).then(() => {
+
+                    useUserSupplyItems.setState({ userSupplyItems: null });
+                    useUserSupplierTotal.setState({ userSupplyItemsTotal: null });
                     itemModalFunDelete()
-                    deleteItemFailFun()
-                });
+                    deleteItemsuccessFun()
+                })
+                    .catch((error) => {
+                        itemModalFunDelete()
+                        deleteItemFailFun()
+                    });
 
-        } else {
-            remove(ref(db, `web/pos/${Id}/suppierItems/${itemdeleteID}`)).then(() => {
-                itemModalFunDelete()
-                deleteItemsuccessFun()
-            })
-                .catch((error) => {
+            } else {
+                remove(ref(db, `web/pos/${Id}/suppierItems/${itemdeleteID}`)).then(() => {
                     itemModalFunDelete()
-                    deleteItemFailFun()
-                });
+                    deleteItemsuccessFun()
+                })
+                    .catch((error) => {
+                        itemModalFunDelete()
+                        deleteItemFailFun()
+                    });
+            }
+
         }
-
 
     };
 
@@ -373,34 +396,37 @@ const Suppliers = () => {
 
     const editItem = () => {
 
-        if (itemName && itemPrice && itemStock && ItemSupplyId && itemStock && itemAmount) {
+        if (Id) {
 
-            try {
-                const dbRef = ref(db, `web/pos/${Id}/suppliersItems/${itemEditID}`);
-                const newbranchRef = update(dbRef, {
+            if (itemName && itemPrice && itemStock && ItemSupplyId && itemStock && itemAmount) {
 
-                    Name: itemName,
-                    Price: itemPrice,
-                    Stock: itemStock,
-                    SupplierID: ItemSupplyId,
-                    Total: itemAmount,
-                    Date: Date.now()
-                    //////make sure you check on the date 
+                try {
+                    const dbRef = ref(db, `web/pos/${Id}/suppliersItems/${itemEditID}`);
+                    const newbranchRef = update(dbRef, {
 
-                });
-                const newCreditKey = newbranchRef.key;
-                itemModalFun()
-                editItemsuccessFun()
+                        Name: itemName,
+                        Price: itemPrice,
+                        Stock: itemStock,
+                        SupplierID: ItemSupplyId,
+                        Total: itemAmount,
+                        Date: Date.now()
+                        //////make sure you check on the date 
+
+                    });
+                    const newCreditKey = newbranchRef.key;
+                    itemModalFun()
+                    editItemsuccessFun()
+                }
+                catch {
+                    console.log('did not edit todays item')
+                    itemModalFun()
+                    editItemFailFun()
+                }
             }
-            catch {
-                console.log('did not edit todays item')
+            else {
                 itemModalFun()
-                editItemFailFun()
+                addItemFailBlankFun()
             }
-        }
-        else {
-            itemModalFun()
-            addItemFailBlankFun()
         }
 
     };
@@ -792,7 +818,7 @@ const Suppliers = () => {
                                                             ? "text-white  bg-blue-800  hover:bg-blue-600   "
                                                             : "bg-blue-600 text-white   hover:bg-blue-800"
                                                         }`}
-                                                    onClick={()=>itemeditsetID(item.id)}
+                                                    onClick={() => itemeditsetID(item.id)}
                                                 >
                                                     Edit
                                                 </button>
@@ -802,7 +828,7 @@ const Suppliers = () => {
                                                             ? "text-white  bg-red-800  hover:bg-red-600 "
                                                             : "bg-red-600 text-white  hover:bg-red-800  "
                                                         }`}
-                                                    onClick={()=>itemDeletesetID(item.id)}
+                                                    onClick={() => itemDeletesetID(item.id)}
                                                 >
                                                     Delete
                                                 </button>

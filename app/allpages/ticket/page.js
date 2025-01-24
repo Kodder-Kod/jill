@@ -37,7 +37,7 @@ const Ticket = () => {
     const handleEmployeeClick = (employeeName) => {
 
 
-        console.log("employeefun",employeeName)
+        console.log("employeefun", employeeName)
 
         setSelectedTicketCart(null)
 
@@ -51,7 +51,7 @@ const Ticket = () => {
             }
             else {
 
-                console.log("employeeb4 set  tickers ",employeeName)
+                console.log("employeeb4 set  tickers ", employeeName)
                 setFilteredTickets(ticketsForEmployee);
             }
 
@@ -101,44 +101,47 @@ const Ticket = () => {
     /// send to db
     const handleSend = () => {
 
-        if (selectEmployee) {
-            if (total == 0) {
+        if (Id) {
 
-                console.log("total is zero")
-                sendModalFun()
-                sendFail()
-            }
+            if (selectEmployee) {
+                if (total == 0) {
 
-            else {
-                try {
-                    const dbRef = ref(db, `web/pos/${Id}/cart/`);
-
-                    const newbranchRef = push(dbRef, {
-
-                        EmployeeID: selectEmployee,
-                        Cart: selectedTicketCart,
-                        Total: total,
-                        Date: Date.now()
-
-                    });
-                    const newCreditKey = newbranchRef.key;
-
-                    sendModalFun()
-                    sendSuccess()
-                    deleteTicket(selectEmployee)
-                }
-                catch {
-                    console.log("did not send to DB")
+                    console.log("total is zero")
                     sendModalFun()
                     sendFail()
                 }
-            }
-        }
-        else {
-            console.log("did not select employee ")
-            sendModalFun()
-            sendFailEmployee()
 
+                else {
+                    try {
+                        const dbRef = ref(db, `web/pos/${Id}/cart/`);
+
+                        const newbranchRef = push(dbRef, {
+
+                            EmployeeID: selectEmployee,
+                            Cart: selectedTicketCart,
+                            Total: total,
+                            Date: Date.now()
+
+                        });
+                        const newCreditKey = newbranchRef.key;
+
+                        sendModalFun()
+                        sendSuccess()
+                        deleteTicket(selectEmployee)
+                    }
+                    catch {
+                        console.log("did not send to DB")
+                        sendModalFun()
+                        sendFail()
+                    }
+                }
+            }
+            else {
+                console.log("did not select employee ")
+                sendModalFun()
+                sendFailEmployee()
+
+            }
         }
     };
 
@@ -154,30 +157,33 @@ const Ticket = () => {
 
     const deleteTicket = (employee) => {
 
+        if (Id) {
 
-        if (ticketTotal == 1) {
+            if (ticketTotal == 1) {
 
-            remove(ref(db, `web/pos/${Id}/ticket`)).then(() => {
+                remove(ref(db, `web/pos/${Id}/ticket`)).then(() => {
 
-                useUserTicket.setState({ userTicket: null });
-                useUserTicketTotal.setState({ userTicketTotal: null });
-                setFilteredTickets(null)
+                    useUserTicket.setState({ userTicket: null });
+                    useUserTicketTotal.setState({ userTicketTotal: null });
+                    setFilteredTickets(null)
 
-            })
-                .catch((error) => {
-                    console.log("ticket was not deleted")
-                });
+                })
+                    .catch((error) => {
+                        console.log("ticket was not deleted")
+                    });
 
-        } else {
-            remove(ref(db, `web/pos/${Id}/ticket/${deleteId}`)).then(() => {
-                console.log("ticket was deleted")
-            
-                handleEmployeeClick(employee)
+            } else {
+                remove(ref(db, `web/pos/${Id}/ticket/${deleteId}`)).then(() => {
+                    console.log("ticket was deleted")
 
-            })
-                .catch((error) => {
-                    console.log("ticket was not deleted")
-                });
+                    handleEmployeeClick(employee)
+
+                })
+                    .catch((error) => {
+                        console.log("ticket was not deleted")
+                    });
+            }
+
         }
 
     }

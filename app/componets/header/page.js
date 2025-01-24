@@ -64,39 +64,45 @@ const Header = () => {
 
     ///// Fetch firebase 
     const fetchEmployee = useCallback(() => {
-        try {
 
-            const posRef = ref(db, `web/pos/${Id}/employees`);
-            onValue(posRef, (snapshot) => {
+        if (Id) {
+            try {
 
-                const data = snapshot.val();
+                const posRef = ref(db, `web/pos/${Id}/employees`);
+                onValue(posRef, (snapshot) => {
 
-                if (data) {
+                    const data = snapshot.val();
 
-                    const newPosts = Object.keys(data).map(key => ({
-                        id: key,
-                        ...data[key]
-                    }));
+                    if (data) {
 
-                    const total = Object.keys(data).map(key => ({
-                        id: key,
-                    }));
+                        const newPosts = Object.keys(data).map(key => ({
+                            id: key,
+                            ...data[key]
+                        }));
 
-                    useUserEmployee.setState({ userEmployee: newPosts })
-                    useUserEmployeeTotal.setState({ userEmployeeTotal: total.length })
+                        const total = Object.keys(data).map(key => ({
+                            id: key,
+                        }));
 
-                }
-            });
+                        useUserEmployee.setState({ userEmployee: newPosts })
+                        useUserEmployeeTotal.setState({ userEmployeeTotal: total.length })
 
-        } catch {
+                    }
+                });
 
-            useUserEmployee.setState({ userEmployee: null })
-            useUserEmployeeTotal.setState({ userEmployeeTotal: null })
+            } catch {
 
-            console.log("cannot read employees")
+                useUserEmployee.setState({ userEmployee: null })
+                useUserEmployeeTotal.setState({ userEmployeeTotal: null })
+
+                console.log("cannot read employees")
+
+            }
 
         }
-    }, []);
+
+
+    }, [Id]);
 
     useEffect(() => {
         fetchEmployee();
@@ -104,40 +110,50 @@ const Header = () => {
 
 
     const fetchItems = useCallback(() => {
-        try {
+        console.log("id itens", Id)
 
-            const posRef = ref(db, `web/pos/${Id}/items`);
-            onValue(posRef, (snapshot) => {
+        if (Id) {
 
-                const data = snapshot.val();
+            try {
 
-                if (data) {
+                const posRef = ref(db, `web/pos/${Id}/items`);
+                onValue(posRef, (snapshot) => {
 
-                    const newPosts = Object.keys(data).map(key => ({
-                        id: key,
-                        ...data[key]
-                    }));
+                    const data = snapshot.val();
 
-                    const total = Object.keys(data).map(key => ({
-                        id: key,
-                    }));
+                    if (data) {
 
-                    useUserItems.setState({ userItems: newPosts })
-                    useUserItemsTotal.setState({ userItemsTotal: total.length })
-                    useUserItemsData.setState({ userItemsData: data })
+                        const newPosts = Object.keys(data).map(key => ({
+                            id: key,
+                            ...data[key]
+                        }));
 
-                }
-            });
+                        const total = Object.keys(data).map(key => ({
+                            id: key,
+                        }));
 
-        } catch {
 
-            useUserItems.setState({ userItems: null })
-            useUserItemsTotal.setState({ userItemsTotal: null })
-            useUserItemsData.setState({ userItemsData: null })
-            console.log("cannot read items")
+                        console.log("items", newPosts)
 
+                        useUserItems.setState({ userItems: newPosts })
+                        useUserItemsTotal.setState({ userItemsTotal: total.length })
+                        useUserItemsData.setState({ userItemsData: data })
+
+                    }
+                });
+
+            } catch {
+
+                useUserItems.setState({ userItems: null })
+                useUserItemsTotal.setState({ userItemsTotal: null })
+                useUserItemsData.setState({ userItemsData: null })
+                console.log("cannot read items")
+
+            }
         }
-    }, []);
+
+
+    }, [Id]);
 
     useEffect(() => {
         fetchItems();
@@ -145,40 +161,46 @@ const Header = () => {
 
 
     const fetchCategories = useCallback(() => {
-        try {
 
-            const posRef = ref(db, `web/pos/${Id}/categories`);
-            onValue(posRef, (snapshot) => {
+        console.log("id cat", Id)
 
-                const data = snapshot.val();
+        if (Id) {
+            try {
 
-                if (data) {
+                const posRef = ref(db, `web/pos/${Id}/categories`);
+                onValue(posRef, (snapshot) => {
 
-                    const newPosts = Object.keys(data).map(key => ({
-                        id: key,
-                        ...data[key]
-                    }));
+                    const data = snapshot.val();
+
+                    if (data) {
+
+                        const newPosts = Object.keys(data).map(key => ({
+                            id: key,
+                            ...data[key]
+                        }));
 
 
-                    const total = Object.keys(data).map(key => ({
-                        id: key,
-                    }));
+                        const total = Object.keys(data).map(key => ({
+                            id: key,
+                        }));
 
-                    useUserCategories.setState({ userCategories: newPosts })
-                    useUserCategoriesTotal.setState({ userCategoriesTotal: total.length })
+                        useUserCategories.setState({ userCategories: newPosts })
+                        useUserCategoriesTotal.setState({ userCategoriesTotal: total.length })
 
-                }
-            });
+                    }
+                });
 
-        } catch {
+            } catch {
 
-            useUserCategories.setState({ userCategories: null })
-            useUserCategoriesTotal.setState({ userCategoriesTotal: null })
+                useUserCategories.setState({ userCategories: null })
+                useUserCategoriesTotal.setState({ userCategoriesTotal: null })
 
-            console.log("cannot read categories")
+                console.log("cannot read categories")
 
+            }
         }
-    }, []);
+
+    }, [Id]);
 
     useEffect(() => {
         fetchCategories();
@@ -186,39 +208,44 @@ const Header = () => {
 
 
     const fetchSuppliers = useCallback(() => {
-        try {
 
-            const posRef = ref(db, `web/pos/${Id}/suppliers`);
-            onValue(posRef, (snapshot) => {
+        if (Id) {
+            try {
 
-                const data = snapshot.val();
+                const posRef = ref(db, `web/pos/${Id}/suppliers`);
+                onValue(posRef, (snapshot) => {
 
-                if (data) {
+                    const data = snapshot.val();
 
-                    const newPosts = Object.keys(data).map(key => ({
-                        id: key,
-                        ...data[key]
-                    }));
+                    if (data) {
+
+                        const newPosts = Object.keys(data).map(key => ({
+                            id: key,
+                            ...data[key]
+                        }));
 
 
-                    const total = Object.keys(data).map(key => ({
-                        id: key,
-                    }));
+                        const total = Object.keys(data).map(key => ({
+                            id: key,
+                        }));
 
-                    useUserSupplier.setState({ userSupplier: newPosts })
-                    useUserSupplierTotal.setState({ userSupplierTotal: total.length })
+                        useUserSupplier.setState({ userSupplier: newPosts })
+                        useUserSupplierTotal.setState({ userSupplierTotal: total.length })
 
-                }
-            });
+                    }
+                });
 
-        } catch {
-            useUserSupplier.setState({ userSupplier: null })
-            useUserSupplierTotal.setState({ userSupplierTotal: null })
+            } catch {
+                useUserSupplier.setState({ userSupplier: null })
+                useUserSupplierTotal.setState({ userSupplierTotal: null })
 
-            console.log("cannot read suppliers")
+                console.log("cannot read suppliers")
+            }
 
         }
-    }, []);
+
+
+    }, [Id]);
 
     useEffect(() => {
         fetchSuppliers();
@@ -226,41 +253,47 @@ const Header = () => {
 
 
     const fetchSupplierItems = useCallback(() => {
-        try {
 
-            const posRef = ref(db, `web/pos/${Id}/supplierItems`);
-            onValue(posRef, (snapshot) => {
+        if (Id) {
+            try {
 
-                const data = snapshot.val();
+                const posRef = ref(db, `web/pos/${Id}/supplierItems`);
+                onValue(posRef, (snapshot) => {
 
-                if (data) {
+                    const data = snapshot.val();
 
-                    const newPosts = Object.keys(data).map(key => ({
-                        id: key,
-                        ...data[key]
-                    }));
+                    if (data) {
 
-                    const total = Object.keys(data).map(key => ({
-                        id: key,
-                    }));
+                        const newPosts = Object.keys(data).map(key => ({
+                            id: key,
+                            ...data[key]
+                        }));
 
-                    useUserSupplyItems.setState({ userSupplyItems: newPosts })
-                    useUserSupplyItemsTotal.setState({ userSupplyItemsTotal: total.length })
-                    useUserSupplyItemsData.setState({ userSupplyItemsData: data })
+                        const total = Object.keys(data).map(key => ({
+                            id: key,
+                        }));
 
-                }
-            });
+                        useUserSupplyItems.setState({ userSupplyItems: newPosts })
+                        useUserSupplyItemsTotal.setState({ userSupplyItemsTotal: total.length })
+                        useUserSupplyItemsData.setState({ userSupplyItemsData: data })
 
-        } catch {
+                    }
+                });
 
-            useUserSupplyItems.setState({ userSupplyItems: null })
-            useUserSupplyItemsTotal.setState({ userSupplyItemsTotal: null })
-            useUserSupplyItemsData.setState({ userSupplyItemsData: null })
+            } catch {
 
-            console.log("cannot read supplier items")
+                useUserSupplyItems.setState({ userSupplyItems: null })
+                useUserSupplyItemsTotal.setState({ userSupplyItemsTotal: null })
+                useUserSupplyItemsData.setState({ userSupplyItemsData: null })
+
+                console.log("cannot read supplier items")
+
+            }
 
         }
-    }, []);
+
+
+    }, [Id]);
 
     useEffect(() => {
         fetchSupplierItems();
@@ -268,80 +301,92 @@ const Header = () => {
 
 
     const fetchCart = useCallback(() => {
-        try {
 
-            const posRef = ref(db, `web/pos/${Id}/cart`);
-            onValue(posRef, (snapshot) => {
+        if (Id) {
+            try {
 
-                const data = snapshot.val();
+                const posRef = ref(db, `web/pos/${Id}/cart`);
+                onValue(posRef, (snapshot) => {
 
-                if (data) {
+                    const data = snapshot.val();
 
-                    const newPosts = Object.keys(data).map(key => ({
-                        id: key,
-                        ...data[key]
-                    }));
+                    if (data) {
 
-                    const total = Object.keys(data).map(key => ({
-                        id: key,
-                    }));
+                        const newPosts = Object.keys(data).map(key => ({
+                            id: key,
+                            ...data[key]
+                        }));
 
-                    useUserCart.setState({ userCart: newPosts })
-                    useUserCartData.setState({ userCartData: data })
-                    useUserCartTotal.setState({ userCartTotal: total.length })
+                        const total = Object.keys(data).map(key => ({
+                            id: key,
+                        }));
 
-                }
-            });
+                        useUserCart.setState({ userCart: newPosts })
+                        useUserCartData.setState({ userCartData: data })
+                        useUserCartTotal.setState({ userCartTotal: total.length })
 
-        } catch {
+                    }
+                });
 
-            useUserCart.setState({ userCart: null })
-            useUserCartData.setState({ userCartData: null })
-            useUserCartTotal.setState({ userCartTotal: null })
-            console.log("cannot read cart")
+            } catch {
+
+                useUserCart.setState({ userCart: null })
+                useUserCartData.setState({ userCartData: null })
+                useUserCartTotal.setState({ userCartTotal: null })
+                console.log("cannot read cart")
+
+            }
 
         }
-    }, []);
+
+
+    }, [Id]);
 
     useEffect(() => {
         fetchCart();
     }, [fetchCart]);
 
     const fetchTickets = useCallback(() => {
-        try {
 
-            const posRef = ref(db, `web/pos/${Id}/ticket`);
-            onValue(posRef, (snapshot) => {
+        if (Id) {
 
-                const data = snapshot.val();
+            try {
 
-                if (data) {
+                const posRef = ref(db, `web/pos/${Id}/ticket`);
+                onValue(posRef, (snapshot) => {
 
-                    const newPosts = Object.keys(data).map(key => ({
-                        id: key,
-                        ...data[key]
-                    }));
+                    const data = snapshot.val();
 
-                    const total = Object.keys(data).map(key => ({
-                        id: key,
-                    }));
+                    if (data) {
 
-                    useUserTicket.setState({ userTicket: newPosts })
-                    useUserTicketData.setState({ userTicketData: data })
-                    useUserTicketTotal.setState({ userTicketTotal: total.length })
+                        const newPosts = Object.keys(data).map(key => ({
+                            id: key,
+                            ...data[key]
+                        }));
 
-                }
-            });
+                        const total = Object.keys(data).map(key => ({
+                            id: key,
+                        }));
 
-        } catch {
+                        useUserTicket.setState({ userTicket: newPosts })
+                        useUserTicketData.setState({ userTicketData: data })
+                        useUserTicketTotal.setState({ userTicketTotal: total.length })
 
-            useUserTicket.setState({ userTicket: null })
-            useUserTicketData.setState({ userTicketData: null })
-            useUserTicketTotal.setState({ userTicketTotal: null })
-            console.log("cannot read tickets")
+                    }
+                });
+
+            } catch {
+
+                useUserTicket.setState({ userTicket: null })
+                useUserTicketData.setState({ userTicketData: null })
+                useUserTicketTotal.setState({ userTicketTotal: null })
+                console.log("cannot read tickets")
+
+            }
 
         }
-    }, []);
+
+    }, [Id]);
 
     useEffect(() => {
         fetchTickets();
