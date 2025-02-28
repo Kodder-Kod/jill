@@ -21,7 +21,6 @@ import { useUserTheme } from '@/app/componets/zustand/theme';
 
 
 
-
 const Inventory = () => {
 
     // Zustand
@@ -33,9 +32,10 @@ const Inventory = () => {
     const theme = useUserTheme((state) => state.userTheme)
 
 
+    
+
     ///General variables
     const [searchQuery, setSearchQuery] = useState("");
-
 
     /// Modals
     // Add 
@@ -145,7 +145,6 @@ const Inventory = () => {
 
 
     const deleteCategory = () => {
-
 
         if (Id) {
 

@@ -65,10 +65,9 @@ const Register = () => {
             try {    // Send email verification
               await sendEmailVerification(user, {
                 handleCodeInApp: true,
-                url: "https://chisendpos002.firebaseapp.com",
+                url: "https://chisendpos001-e1d15.firebaseapp.com",
               });
               console.log("send verification imetii ")
-
             }
             catch {
 

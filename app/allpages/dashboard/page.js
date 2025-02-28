@@ -25,6 +25,8 @@ const Dashboard = () => {
   const categories = useUserCategories((state) => state.userCategories)
   const items = useUserItems((state) => state.userItems)
 
+
+
   const employees = useUserEmployee((state) => state.userEmployee)
 
   const theme = useUserTheme((state) => state.userTheme)
@@ -86,7 +88,6 @@ const Dashboard = () => {
 
       // Check if the stock in cart has reached the store stock
       const stockCheck = existingItem ? existingItem.stock >= item.Stock : false;
-
 
 
       if (existingItem) {

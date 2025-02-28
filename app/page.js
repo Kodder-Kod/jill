@@ -1,14 +1,9 @@
-"use client"
+"use client";
 
-
-
-import { useState, useEffect } from 'react';
-import { onAuthStateChanged, getAuth } from 'firebase/auth';
-import Header from "./componets/header/page";
+import { useState, useEffect } from "react";
+import Header from "./componets/header/page"; // Correct import
 import LogIn from "./allpages/user/login/page";
-import Reports from './allpages/report/page';
-
-
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
 
 export default function Home() {
 
@@ -16,7 +11,7 @@ export default function Home() {
   const auth = getAuth()
 
   const [initializing, setInitializing] = useState(true);
-
+ 
 
   // Handle authentication state changes
   useEffect(() => {
@@ -34,7 +29,7 @@ export default function Home() {
   // If user is not authenticated, show the login page
   if (!user) {
     console.log(user)
-    return <LogIn/>;
+    return <LogIn />;
   }
   // If user is authenticated, redirect to the dashboard
 
@@ -45,4 +40,3 @@ export default function Home() {
   // Adjust to your actual dashboard path
   return null;
 }
-
