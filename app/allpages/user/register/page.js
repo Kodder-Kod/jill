@@ -68,6 +68,7 @@ const Register = () => {
                 url: "https://chisendpos001-e1d15.firebaseapp.com",
               });
               console.log("send verification imetii ")
+
             }
             catch {
 
@@ -104,6 +105,7 @@ const Register = () => {
 
               })
               const newAdminKey = newAdminRef.key;
+              
             }
             catch {
 
@@ -111,8 +113,6 @@ const Register = () => {
             }
 
             const route = router.push('/');
-
-
             // Reset form fields
             setAdminName('');
             setAdminEmail('');
