@@ -189,10 +189,16 @@ const Settings = () => {
             await signOut(auth)
                 .then(() => {
                     router.push('/');
-                    useUserID.setState({ userID: "" });
-                    useUserName.setState({ userName: "" });
-                    useUserEmail.setState({ userEmail: "" });
-                    useUserPhone.setState({ userPhone: "" });
+
+                    useUserID.persist.clearStorage();
+                    useUserName.persist.clearStorage();
+                    useUserEmail.persist.clearStorage();
+                    useUserPhone.persist.clearStorage();
+
+
+
+
+
                     useUserEmployee.setState({ userEmployee: null })
                     useUserEmployeeTotal.setState({ userEmployeeTotal: null })
                     useUserItems.setState({ userItems: null })

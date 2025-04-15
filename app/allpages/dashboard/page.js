@@ -539,7 +539,7 @@ const Dashboard = () => {
               className={`py-2 px-4 mt-4 rounded 
                  ${theme === "Dark"
                   ? "text-white  bg-blue-800  hover:bg-blue-600   "
-                  : "bg-blue-600 text-white   hover:bg-blue-800"
+                  : "bg-blue-600 text-white   hover:bg-blue-800 shadow-lg"
                 }`}
               onClick={() => setReceiptModal(true)}
             >
@@ -549,7 +549,7 @@ const Dashboard = () => {
               className={`py-2 px-4 mt-4 rounded 
                ${theme === "Dark"
                   ? "text-white  bg-blue-800  hover:bg-blue-600   "
-                  : "bg-yellow-400 hover:bg-yellow-700 text-black"
+                  : "bg-yellow-400 hover:bg-yellow-700 text-black shadow-lg"
                 }`}
               onClick={() => setTicketModal(true)}
             >
@@ -559,7 +559,7 @@ const Dashboard = () => {
               className={` py-2 px-4 mt-4 rounded 
                   ${theme === "Dark"
                   ? "text-white  bg-green-800  hover:bg-green-600   "
-                  : "bg-green-600 text-white   hover:bg-green-800"
+                  : "bg-green-600 text-white   hover:bg-green-800 shadow-lg"
                 }`}
               onClick={() => setSendModal(true)}
             >
@@ -569,7 +569,7 @@ const Dashboard = () => {
               className={` py-2 px-4 mt-4 rounded 
                   ${theme === "Dark"
                   ? "text-white  bg-red-800  hover:bg-red-600 "
-                  : "bg-red-600 text-white  hover:bg-red-800  "
+                  : "bg-red-600 text-white  hover:bg-red-800 shadow-lg "
                 }`}
 
               onClick={() => handleCancel()}
