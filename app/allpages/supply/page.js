@@ -559,9 +559,11 @@ const Suppliers = () => {
             }`}>
 
             {/* Main Layout */}
-            <div className="flex flex-grow p-4  ">
+            <div className="flex flex-col md:flex-row flex-grow p-4 gap-4">
 
-                <aside className="w-2/4 p-6 border-r shadow-xl h-screen flex flex-col">
+
+            <aside className="w-full md:w-2/4 xl:w-1/3 p-4 border-r shadow-xl h-auto sm:min-h-screen flex flex-col overflow-auto">
+
                     <div className="flex justify-between items-center mb-6">
                         <h3 className="text-lg font-bold mr-20 ">Supplier Name</h3>
                         <button
@@ -642,8 +644,8 @@ const Suppliers = () => {
 
                     </div>
                 </aside>
+                <aside className="w-full md:w-1/4 xl:w-1/4 p-4 border-r shadow-md h-auto sm:min-h-screen flex flex-col overflow-auto">
 
-                <aside className="w-1/4 p-6 border-r shadow-md h-screen flex flex-col">
                     <div className="flex justify-between items-center mb-6">
                         <h3 className="text-lg font-bold ">Date </h3>
                     </div>
@@ -690,7 +692,8 @@ const Suppliers = () => {
 
                 {/* Item List */}
 
-                <section className="w-full  h-screen flex flex-col">
+                <section className="w-full md:w-3/4 xl:w-2/4 min-h-screen flex flex-col overflow-auto">
+
                     <div className="flex justify-between items-center mb-3">
                         <h3 className="text-lg font-bold m-5">Items </h3>
                     </div>

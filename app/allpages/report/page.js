@@ -453,7 +453,8 @@ const Reports = () => {
             >
                 {/* Summary Cards */}
 
-                <div className="grid grid-cols-4 gap-2 mb-4 ">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
+
                     {reportData.map(({ label, value, icon, iconColor }) => (
                         <div key={label} className={` shadow p-4 rounded-xl flex items-center 
                           ${theme === "Dark"
@@ -509,7 +510,8 @@ const Reports = () => {
 
 
                 {/* Sales Over Time */}
-                <div className="grid grid-cols-3 gap-4 mb-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+
                     <div className={`col-span-2  shadow p-4 rounded-lg  
                      ${theme === "Dark"
                             ? " bg-[#132962]"
@@ -540,7 +542,7 @@ const Reports = () => {
                 </div>
 
 
-                <div className="grid grid-cols-2 gap-4 mb-4  ">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
 
 
 

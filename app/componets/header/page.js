@@ -20,6 +20,10 @@ import Suppliers from "@/app/allpages/supply/page";
 import Settings from "@/app/allpages/settings/page";
 import { FaTachometerAlt, FaBoxOpen, FaTicketAlt, FaChartLine, FaTruck, FaCog } from 'react-icons/fa';
 import { useUserTheme } from "../zustand/theme";
+import {
+    FaHome, FaInfoCircle, FaMapMarkedAlt, FaPhotoVideo, FaChalkboardTeacher,
+    FaHandsHelping, FaUserInjured, FaBriefcase, FaFileContract, FaQuestionCircle, FaEnvelope, FaFirstAid, FaChevronDown, FaBars, FaSearch
+} from 'react-icons/fa';
 
 
 
@@ -34,6 +38,15 @@ const pages = [
 ];
 
 const Header = () => {
+
+
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [aboutOpen, setAboutOpen] = useState(false);
+    const [branchesOpen, setBranchesOpen] = useState(false);
+    const [dropdownTimeout, setDropdownTimeout] = useState(null);
+    const [menuOpen, setMenuOpen] = useState(false);
+
+
 
     //// General Variables
     const [currentPage, setCurrentPage] = useState('Dashboard');
@@ -406,9 +419,10 @@ const Header = () => {
 
     return (
 
+
         <div>
             {/* Header */}
-            <div className={`flex items-center justify-between p-3 
+            <div className={` hidden md:flex   items-center justify-between p-3 
             
              ${theme === "Dark"
                     ? "bg-[#132962] text-white"
@@ -416,14 +430,14 @@ const Header = () => {
                 }`
             }>
                 {/* Logo */}
-                <div className={`flex items-center text-xl font-extrabold  
+                <div className={`flex items-center text-xl font-bold  
                   ${theme === "Dark"
                         ? " text-white"
                         : " text-blue-600 "
                     }`
                 }>
                     <img
-                        src="/btc.png"
+                        src="/logo.png"
                         alt="Business Logo"
                         className="w-12 h-12 mr-2 rounded "
                     />
@@ -477,6 +491,52 @@ const Header = () => {
 
             </div>
 
+
+            {/**  Mobile and tablet view navbar */}
+            <div className={` top-0 z-50 shadow-xl w-screen text-sm block md:hidden   `}>
+
+
+                <div className={`    ${theme === "Dark"
+                    ? "bg-[#132962] text-white"
+                    : " text-black   bg-white border-b shadow-xl"
+                    } flex justify-between items-center px-4 py-1  shadow-xl `}>
+                    <button onClick={() => setMenuOpen(!menuOpen)} >
+                        <FaBars size={24} />
+                    </button>
+                    <div className="flex justify-center w-full">
+                        <img src="/logo.png" alt="logo" className="h-12" />
+                    </div>
+                    <div className="flex gap-2 items-center">
+                        <FaSearch size={20} className=" mr-3" />
+                    </div>
+                </div>
+
+                {menuOpen && (
+
+                    <div className={`absolute p-4 shadow-xl text-black rounded-b-xl w-1/2 block md:hidden ${theme === "Dark" ? "bg-[#132962] text-white border-white" : " bg-white text-black border-blue-600"} `}>
+                        {pages.map((item, index) => (
+                            <div key={index} className={`border-b ${theme === "Dark" ? "bg-[#132962] text-white border-white" : "text-black border-blue-600"}`}>
+                                <button
+                                    onClick={() => {setCurrentPage(item.name), setMenuOpen(false)}}
+                                    className={`flex items-center gap-2 text-md px-4 my-2 py-2 rounded-xl 
+                ${currentPage === item.name
+                                            ? `${theme === "Dark" ? "bg-gray-300 text-black" : "bg-blue-600 text-white"}`
+                                            : `${theme === "Dark" ? "bg-[#132962] text-white" : "text-black bg-white "}`
+                                        }`}
+                                >
+                                    {item.icon} {item.name}
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+
+
+
+                )}
+
+
+            </div>
+
             <div className={`p-4    
              ${theme === "Dark"
                     ? "bg-[#171941] text-white"
@@ -487,6 +547,9 @@ const Header = () => {
 
 
         </div>
+
+
+
     )
 }
 

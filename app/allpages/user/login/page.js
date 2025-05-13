@@ -130,7 +130,7 @@ const LogIn = () => {
 
                 {/* Logo */}
                 <div className="flex justify-center mb-6">
-                    <img src="/btc.png" alt="Logo" className="h-12 shadow-md" style={{ borderRadius: 15 }} />
+                    <img src="/logo.png" alt="Logo" className="h-12 shadow-md" style={{ borderRadius: 15 }} />
                 </div>
 
                 {/* App Title */}

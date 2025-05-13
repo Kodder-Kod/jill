@@ -320,98 +320,88 @@ const Settings = () => {
                     `}>
                     <h2 className="text-lg font-bold mb-4">User Profile</h2>
                     <div>
-                        <label htmlFor="username" className="block font-medium mb-2">
-                            Business Name:
-                        </label>
-                        <input
-                            type="text"
-                            id="username"
-                            placeholder="Edit your Business Name "
-                            className={`px-3 py-2 w-full mb-4  rounded-md
-                                  ${theme === "Dark"
-                                    ? "bg-gray-300"
-                                    : "border text-black shadow-lg "
-                                }
-                    `}
-                            value={userName}
-                            onChange={(e) => setUserName(e.target.value)}
-                        />
+  <label htmlFor="username" className="block font-medium mb-2">
+    Business Name:
+  </label>
+  <input
+    type="text"
+    id="username"
+    placeholder="Edit your Business Name"
+    className={`px-3 py-2 w-full mb-4 rounded-md
+      ${theme === "Dark" ? "bg-gray-300" : "border text-black shadow-lg"}
+    `}
+    value={userName}
+    onChange={(e) => setUserName(e.target.value)}
+  />
 
-                        <div className="flex flex-row ">
-                            <div >
-                                <label htmlFor="email" className="block font-medium mb-2">
-                                    Email:
-                                </label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    placeholder="Edit your email"
-                                    className={`rounded-md  px-3 py-2 mb-4
+  <div className="flex flex-col md:flex-row md:gap-10">
+    <div className="w-full md:w-1/2">
+      <label htmlFor="email" className="block font-medium mb-2">
+        Email:
+      </label>
+      <input
+        type="email"
+        id="email"
+        placeholder="Edit your email"
+        className={`w-full rounded-md px-3 py-2 mb-4
+          ${theme === "Dark" ? "bg-gray-300" : "border text-black shadow-lg"}
+        `}
+        value={userEmail}
+        onChange={(e) => setUserEmail(e.target.value)}
+      />
+    </div>
 
-                                     ${theme === "Dark"
-                                            ? "bg-gray-300"
-                                            : "border text-black shadow-lg "
-                                        }
-                    `}
-                                    value={userEmail}
-                                    onChange={(e) => setUserEmail(e.target.value)}
-                                />
+    <div className="w-full md:w-1/2">
+      <label htmlFor="phone" className="block font-medium mb-2">
+        Phone Number:
+      </label>
+      <input
+        type="number"
+        id="phone"
+        placeholder="Edit Phone Number"
+        className={`w-full border rounded px-3 py-2 mb-4
+          ${theme === "Dark" ? "bg-gray-300" : "border text-black shadow-lg"}
+        `}
+        value={userPhone}
+        onChange={(e) => setUserPhone(e.target.value)}
+      />
+    </div>
+  </div>
 
-                            </div>
+  <div className="flex flex-col md:flex-row md:justify-between gap-2">
+    <button
+      className={`py-2 px-4   rounded-md 
+        ${theme === "Dark"
+          ? "text-white bg-blue-800 hover:bg-blue-600"
+          : "bg-blue-600 text-white hover:bg-blue-800"}
+      `}
+      onClick={editProfile}
+    >
+      Edit Profile
+    </button>
 
-                            <div className="mx-10">
-                                <label htmlFor="email" className="block font-medium mb-2">
-                                    Phone Number:
-                                </label>
-                                <input
-                                    type="number"
-                                    id="phone"
-                                    placeholder="Edit Phone Number"
-                                    className={`border rounded px-3 py-2  mb-4
-                                     ${theme === "Dark"
-                                            ? "bg-gray-300"
-                                            : "border text-black shadow-lg "
-                                        }
-                    `}
-                                    value={userPhone}
-                                    onChange={(e) => setUserPhone(e.target.value)}
-                                />
+    <button
+      onClick={handleForgotPassword}
+      className={`hover:underline text-sm sm:my-0 my-3
+        ${theme === "Dark" ? "text-blue-400" : "text-blue-700"}
+      `}
+    >
+      Change Password..
+    </button>
 
-                            </div>
+    <button
+      className={`text-white py-2 px-4 rounded-md
+        ${theme === "Dark"
+          ? "bg-red-800 hover:bg-red-600"
+          : "bg-red-600 hover:bg-red-700"}
+      `}
+      onClick={handleLogout}
+    >
+      Log Out
+    </button>
+  </div>
+</div>
 
-                        </div>
-
-                        <div className="flex flex-row justify-between">
-                            <button className={` py-2 px-4 rounded  
-                             ${theme === "Dark"
-                                    ? "text-white  bg-blue-800  hover:bg-blue-600   "
-                                    : "bg-blue-600 text-white   hover:bg-blue-800"
-                                }`}
-                                onClick={editProfile}
-                            >
-                                Edit Profile
-                            </button>
-
-                            <button onClick={handleForgotPassword} className={` hover:underline text-sm 
-                              ${theme === "Dark"
-                                    ? "text-blue-400  "
-                                    : " text-blue-700 "
-                                }`}>
-                                Change Password..
-                            </button>
-
-                            <button className={` text-white py-2 px-4 rounded 
-                              ${theme === "Dark"
-                                    ? "text-white  bg-red-800  hover:bg-red-600 "
-                                    : "bg-red-600 text-white  hover:bg-red-780  "
-                                }`}
-                                onClick={handleLogout}>
-                                Log Out
-                            </button>
-
-                        </div>
-
-                    </div>
                 </section>
 
                 {/* Employee Management */}

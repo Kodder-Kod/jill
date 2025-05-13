@@ -17,6 +17,8 @@ import { TiTick } from "react-icons/ti";
 import itemsdata from "@/app/data/items";
 import categoriesdata from "@/app/data/categories";
 import { useUserTheme } from '@/app/componets/zustand/theme';
+import { CiBarcode } from "react-icons/ci";
+import { CgCommunity } from "react-icons/cg";
 
 
 
@@ -32,7 +34,7 @@ const Inventory = () => {
     const theme = useUserTheme((state) => state.userTheme)
 
 
-    
+
 
     ///General variables
     const [searchQuery, setSearchQuery] = useState("");
@@ -41,6 +43,8 @@ const Inventory = () => {
     // Add 
     const [itemName, setItemName] = useState('')
     const [itemPrice, setItemPrice] = useState('')
+    const [itemUnit, setItemUnit] = useState('')
+    const [itemCode, setItemCode] = useState('')
     const [itemStock, setItemStock] = useState('')
     const [ItemCategory, setItemCategory] = useState('')
 
@@ -54,6 +58,8 @@ const Inventory = () => {
         setItemName('')
         setItemPrice('')
         setItemStock('')
+        setItemCode('')
+        setItemUnit('')
         setItemCategory('')
         setItemModal(false)
     }
@@ -66,8 +72,6 @@ const Inventory = () => {
     const catModalFunBtn = () => setCatModal(true);
 
 
-
-
     /// Edit
     const [itemModalEdit, setItemModalEdit] = useState(false)
     const [catModalEdit, setCatModalEdit] = useState(false);
@@ -76,6 +80,8 @@ const Inventory = () => {
         setItemName('')
         setItemPrice('')
         setItemStock('')
+        setItemCode('')
+        setItemUnit('')
         setItemCategory('')
         setItemModalEdit(false)
     }
@@ -240,6 +246,8 @@ const Inventory = () => {
                         Price: itemPrice,
                         Stock: itemStock,
                         Category: ItemCategory,
+                        Unit: itemUnit,
+                        Code: itemCode,
 
                     });
                     const newCreditKey = newbranchRef.key;
@@ -334,6 +342,8 @@ const Inventory = () => {
                     Name: itemName,
                     Price: itemPrice,
                     Stock: itemStock,
+                    Unit: itemUnit,
+                    Code: itemCode,
                     Category: ItemCategory,
 
                 });
@@ -484,9 +494,11 @@ const Inventory = () => {
 
 
             {/* Main Layout */}
-            <div className="flex flex-grow rounded-xl ">
+            <div className="flex flex-col lg:flex-row flex-grow rounded-xl">
+
                 {/* Categories Management */}
-                <aside className="w-1/3  p-6  shadow-xl h-screen flex flex-col">
+                <aside className="w-full lg:w-1/3 p-6 shadow-xl sm:h-screen flex flex-col h-96  my-3 sm:my-0 rounded-xl  ">
+
                     <div className="flex justify-between items-center mb-4">
                         <h3 className="text-lg font-bold"
                         >Manage Categories</h3>
@@ -503,7 +515,7 @@ const Inventory = () => {
                     </div>
 
                     {/* Scrollable Categories Section */}
-                    <div className=" grid grid-cols-1 gap-2 px-10 pt-2 overflow-y-auto ">
+                    <div className=" grid sm:grid-cols-1 grid-cols-2 gap-2 px-10 pt-2 overflow-y-auto   ">
                         {categories && categories.map((category, index) => (
                             <div
                                 key={index}
@@ -562,7 +574,8 @@ const Inventory = () => {
                 </aside>
 
                 {/* Items Management */}
-                <section className="w-2/3 h-screen flex flex-col  ">
+                <section className="w-full lg:w-2/3 h-screen flex flex-col rounded-xl ">
+
                     <div className="flex justify-between items-center mb-1">
                         <h3 className="text-lg font-bold m-5">Items Management</h3>
 
@@ -576,13 +589,13 @@ const Inventory = () => {
                                 type="text"
                                 placeholder="Search items..."
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className={`w-1/3 p-2 ml-5 rounded-xl  
+                                className={`w-full sm:w-64 md:w-80 lg:w-[300px] p-2 ml-2 rounded-xl 
                                    ${theme === "Dark"
                                         ? "bg-gray-300  text-black hover:bg-gray-100"
                                         : "bg-white shadow-lg  hover:bg-gray-100"
                                     }`}
 
-                                style={{ width: 300 }}
+
                             />
                             <FaSearch className=" text-xl ml-2 mt-2" />
 
@@ -602,7 +615,7 @@ const Inventory = () => {
                            */}
 
                             <button
-                                className={` text-sm px-4 py-2 rounded  mx-4    
+                                className={` text-sm px-4 py-2 sm:rounded rounded-lg  mx-4    
                                          ${theme === "Dark"
                                         ? "text-white  bg-green-800  hover:bg-green-600   "
                                         : "bg-green-600 text-white   hover:bg-green-800"
@@ -612,7 +625,7 @@ const Inventory = () => {
                                 + Add Item
                             </button>
                             <button
-                                className={`text-sm px-4 py-2 rounded mx-3
+                                className={`text-sm px-4 py-2 sm:rounded rounded-lg  mx-3
                                    ${theme === "Dark"
                                         ? "text-white  bg-blue-800 hover:bg-blue-600   "
                                         : "bg-blue-600 text-white hover:bg-blue-800"
@@ -723,7 +736,7 @@ const Inventory = () => {
                                                     Edit
                                                 </button>
                                                 <button
-                                                    className={` py-1 px-3 rounded
+                                                    className={` py-1 px-3 rounded sm:my-0 my-3
                                                             ${theme === "Dark"
                                                             ? "text-white  bg-red-800  hover:bg-red-600 "
                                                             : "bg-red-600 text-white  hover:bg-red-800  "
@@ -789,6 +802,39 @@ const Inventory = () => {
                             </div>
 
                             <div className="relative">
+                                <input
+                                    type="text"
+                                    placeholder="Code eg D009"
+                                    className="w-1/2 p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-2 focus:ring-[#303133]  pl-12 shadow-md"
+                                    style={{ color: "#000000" }}
+                                    value={itemCode}
+                                    onChange={(e) => setItemCode(e.target.value)}
+                                />
+                                <CiBarcode className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black text-xl" />
+                            </div>
+
+                            <div className="relative">
+
+                                <select
+                                    className="border p-3 rounded my -3 shadow text-black"
+                                    value={itemUnit}
+                                    onChange={(e) => setItemUnit(e.target.value)}
+                                >
+                                    <option value="" disabled>
+                                        -- Select Unit --
+                                    </option>
+
+                                    <>
+                                    
+                                        <option value="dzn">DZN</option>
+                                        <option value="ctn">CTN</option>
+                                    </>
+                                </select>
+
+                            </div>
+
+
+                            <div className="relative">
 
                                 <select
                                     className="border p-3 rounded my -3 shadow text-black"
@@ -798,15 +844,23 @@ const Inventory = () => {
                                     <option value="" disabled>
                                         -- Select Categories --
                                     </option>
-                                    {categories &&
-                                        categories.map((category) => (
-                                            <option key={category.id} value={category.Name}>
-                                                {category.Name}
-                                            </option>
-                                        ))}
+                                    <option value="None">None</option>
+                                    {categories && (
+                                        <>
+
+                                            {categories.map((category) => (
+                                                <option key={category.id} value={category.Name}>
+                                                    {category.Name}
+                                                </option>
+                                            ))}
+                                        </>
+                                    )}
+
                                 </select>
 
                             </div>
+
+
                             <div className="relative">
                                 <input
                                     type="number"
@@ -889,24 +943,58 @@ const Inventory = () => {
                             </div>
 
                             <div className="relative">
+                                <input
+                                    type="text"
+                                    placeholder="Code"
+                                    className="w-1/2 p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-2 focus:ring-[#303133]  pl-12 shadow-md"
+                                    style={{ color: "#000000" }}
+                                    value={itemCode}
+                                    onChange={(e) => setItemCode(e.target.value)}
+                                />
+                                <CiBarcode className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black text-xl" />
+                            </div>
+
+                            <div className="relative">
 
                                 <select
-                                    className="border p-3 rounded my-3 shadow text-black"
+                                    className="border p-3 rounded my -3 shadow text-black"
+                                    value={itemUnit}
+                                    onChange={(e) => setItemUnit(e.target.value)}
+                                >
+                                    <option value="" disabled>
+                                        -- Select Unit --
+                                    </option>
+                                    <>
+                                     
+                                        <option value="dzn">DZN</option>
+                                        <option value="ctn">CTN</option>
+                                    </>
+                                </select>
+                            </div>
+
+                            <div className="relative">
+                                <select
+                                    className="border p-3 rounded my -3 shadow text-black"
                                     value={ItemCategory}
                                     onChange={(e) => setItemCategory(e.target.value)}
                                 >
                                     <option value="" disabled>
                                         -- Select Categories --
                                     </option>
-                                    {categories &&
-                                        categories.map((category) => (
-                                            <option key={category.id} value={category.Name}>
-                                                {category.Name}
-                                            </option>
-                                        ))}
+                                    <option value="None">None</option>
+                                    {categories && (
+                                        <>
+                                            {categories.map((category) => (
+                                                <option key={category.id} value={category.Name}>
+                                                    {category.Name}
+                                                </option>
+                                            ))}
+                                        </>
+                                    )}
                                 </select>
-
                             </div>
+
+
                             <div className="relative">
                                 <input
                                     type="number"

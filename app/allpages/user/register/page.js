@@ -65,7 +65,7 @@ const Register = () => {
             try {    // Send email verification
               await sendEmailVerification(user, {
                 handleCodeInApp: true,
-                url: "https://chisendpos001-e1d15.firebaseapp.com",
+                url: "https://chisendwebsite.firebaseapp.com",
               });
               console.log("send verification imetii ")
 
@@ -113,6 +113,7 @@ const Register = () => {
             }
 
             const route = router.push('/');
+            console.log('did not create ')
             // Reset form fields
             setAdminName('');
             setAdminEmail('');
@@ -132,6 +133,7 @@ const Register = () => {
           }
         }
       } else {
+        console.log("haiku work 2 ")
         setAdminName('');
         setAdminEmail('');
         setAdminPassword('');
@@ -161,7 +163,7 @@ const Register = () => {
 
           {/* Logo */}
           <div className="flex justify-center mb-6">
-            <img src="/btc.png" alt="Logo" className="h-12 shadow-md " style={{ borderRadius: 15 }} />
+            <img src="/logo.png" alt="Logo" className="h-12 shadow-md " style={{ borderRadius: 15 }} />
           </div>
 
 

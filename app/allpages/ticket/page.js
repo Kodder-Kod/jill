@@ -224,9 +224,11 @@ const Ticket = () => {
 
 
             {/* Main Layout */}
-            <div className="flex flex-grow p-1 ">
+            <div className="flex flex-col lg:flex-row flex-grow p-1">
 
-                <aside className="w-1/4  p-6 border-r shadow-xl h-screen flex flex-col">
+
+            <aside className="w-full lg:w-1/4 p-6 border-r  shadow-xl rounded-lg h-auto sm:h-screen flex flex-col">
+
                     <div className="flex justify-between items-center mb-6">
                         <h3 className="text-lg font-bold ">Employees </h3>
                     </div>
@@ -270,8 +272,9 @@ const Ticket = () => {
                     </div>
                 </aside>
 
+                <aside className="w-full lg:w-2/4 p-6 border-r shadow-md rounded-lg h-auto sm:h-screen flex flex-col">
 
-                <aside className="w-2/4 p-6 border-r shadow-md h-screen flex flex-col">
+
                     <div className="flex justify-between items-center mb-6">
                         <h3 className="text-lg font-bold mr-20 ">Ticket Names</h3>
                     </div>
