@@ -825,9 +825,10 @@ const Inventory = () => {
                                     </option>
 
                                     <>
-                                    
+
                                         <option value="dzn">DZN</option>
                                         <option value="ctn">CTN</option>
+                                        <option value="ctn">PCS</option>
                                     </>
                                 </select>
 
@@ -965,9 +966,10 @@ const Inventory = () => {
                                         -- Select Unit --
                                     </option>
                                     <>
-                                     
+
                                         <option value="dzn">DZN</option>
                                         <option value="ctn">CTN</option>
+                                        <option value="ctn">PCS</option>
                                     </>
                                 </select>
                             </div>

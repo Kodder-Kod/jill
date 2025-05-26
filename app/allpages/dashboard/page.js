@@ -20,15 +20,6 @@ import { FaCashRegister } from "react-icons/fa";
 
 const Dashboard = () => {
 
-  const receiptData = {
-
-    tillNo: "7",
-    ms: "ASKAH",
-    date: "01/04/2025",
-    time: "09:21:35",
-
-
-  };
 
 
   //// Zustand 
@@ -74,9 +65,13 @@ const Dashboard = () => {
   const [receiptModal, setReceiptModal] = useState(false);
 
   const receiptModalFun = () => setReceiptModal(false);
+
   const sendModalFun = () => {
     setSelectEmployee("")
-
+    setTicketName('')
+    setSelectedDate('')
+    setSelectedTime('')
+    setSelectedTill('')
     setSendModal(false);
   }
 
@@ -257,6 +252,17 @@ const Dashboard = () => {
   };
 
 
+  const generateRandomHex = () => {
+    const chars = '0123456789ABCDEF';
+    let hex = '';
+    for (let i = 0; i < 6; i++) {
+      hex += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return hex;
+  };
+
+
+
   //// send cart to the database 
   const handleSend = () => {
 
@@ -271,14 +277,20 @@ const Dashboard = () => {
 
         else {
           try {
+            const hexTicket = generateRandomHex();
+
             const dbRef = ref(db, `web/pos/${Id}/cart/`);
 
             const newbranchRef = push(dbRef, {
 
               EmployeeID: selectEmployee,
+              Name: hexTicket,
               Cart: cart,
               Total: total,
-              Date: Date.now()
+              Date: Date.now(),
+              ReceiptDate: selectedDate,
+              ReceiptTime: selectedTime,
+              ReceiptTill: selectedTill,
 
             });
             const newCreditKey = newbranchRef.key;
@@ -629,16 +641,6 @@ const Dashboard = () => {
                 Receipt
               </button>
               <button
-                className={`py-2 px-4 mt-4 rounded 
-               ${theme === "Dark"
-                    ? "text-white  bg-blue-800  hover:bg-blue-600   "
-                    : "bg-yellow-400 hover:bg-yellow-700 text-black shadow-lg"
-                  }`}
-                onClick={() => setTicketModal(true)}
-              >
-                Ticket
-              </button>
-              <button
                 className={` py-2 px-4 mt-4 rounded 
                   ${theme === "Dark"
                     ? "text-white  bg-green-800  hover:bg-green-600   "
@@ -757,16 +759,26 @@ const Dashboard = () => {
               Total: Ksh {total.toFixed(2)}
             </div>
 
-            <div className="relative my-2">
-              <input
-                type="text"
-                placeholder="Name"
-                className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#303133] pl-12 shadow-md"
-                style={{ color: "#000000" }}
-                value={receiptName}
-                onChange={(e) => setReceiptName(e.target.value)}
-              />
-              <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black text-xl" />
+            <div className="mt-4">
+
+              <p className="font-semibold"> Select Cashier</p>
+
+              <select
+                className="border p-2 rounded mt-1 text-black"
+                value={selectEmployee}
+                onChange={(e) => setSelectEmployee(e.target.value)}
+              >
+                <option value="" disabled>
+                  -- Select the Cashier --
+                </option>
+                {employees &&
+                  employees.map((employee) => (
+                    <option key={employee.id} value={employee.Name}>
+                      {employee.Name}
+                    </option>
+                  ))}
+              </select>
+
             </div>
 
             <div className="relative my-2">
@@ -837,7 +849,7 @@ const Dashboard = () => {
 
           <div
             className={`p-4  shadow w-[380px] font-sans text-sm  print-area receipt-container
-        ${theme === "Dark" ? "bg-[#171941] text-white" : "bg-white text-black"}
+        ${theme === "Dark" ? "bg-white text-black" : "bg-white text-black"}
       `}
           >
             <div className="text-center text-2xl font-bold">
@@ -863,7 +875,7 @@ const Dashboard = () => {
             <div className="flex justify-between mb-2 font-bold">
               <div>
                 <p className="text-sm  ">Till No: {selectedTill}</p>
-                <p className="text-sm ">M/S: {receiptName}</p>
+                <p className="text-sm ">M/S: {selectEmployee}</p>
                 <p className="text-sm ">PIN:</p>
               </div>
               <div>
@@ -1083,6 +1095,43 @@ const Dashboard = () => {
 
             </div>
 
+
+
+            <div className="relative my-2">
+              <input
+                type="number"
+                placeholder="Select_Till"
+                className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#303133] pl-12 shadow-md"
+                style={{ color: "#000000" }}
+                value={selectedTill}
+                onChange={(e) => setSelectedTill(e.target.value)}
+              />
+              <FaCashRegister className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black text-xl" />
+            </div>
+
+            {/* DATE PICKER BOX */}
+            <div className="relative my-2">
+              <input
+                type="date"
+                className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#303133] shadow-md"
+                style={{ color: "#000000" }}
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+              />
+            </div>
+
+            {/* TIME PICKER BOX */}
+            <div className="relative my-2">
+              <input
+                type="time"
+                step="1" // 👈 This enables hours:minutes:seconds
+                className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#303133] shadow-md"
+                style={{ color: "#000000" }}
+                value={selectedTime}
+                onChange={(e) => setSelectedTime(e.target.value)}
+              />
+
+            </div>
 
             <div className=" flex flex-row justify-evenly">
               <button
