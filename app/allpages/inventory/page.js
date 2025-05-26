@@ -187,11 +187,12 @@ const Inventory = () => {
 
     const [catEditID, setCatEditId] = useState()
 
-    const catEditsetID = (id) => {
+    const catEditsetID = (id,jina) => {
 
         catModalFunBtnEdit()
 
         setCatEditId(id)
+        setCatName(jina)
     }
 
 
@@ -324,11 +325,17 @@ const Inventory = () => {
 
     const [itemEditID, setItemEditId] = useState()
 
-    const itemEditsetID = (id) => {
+    const itemEditsetID = (id, jina, stock, price, category, unit, code) => {
 
         itemModalFunBtnEdit()
 
         setItemEditId(id)
+        setItemName(jina)
+        setItemPrice(price)
+        setItemStock(stock)
+        setItemCode(code)
+        setItemUnit(unit)
+        setItemCategory(category)
     }
 
     const editItem = () => {
@@ -534,7 +541,7 @@ const Inventory = () => {
                                             ? "text-white  bg-blue-800  hover:bg-blue-600   "
                                             : "bg-blue-600 text-white   hover:bg-blue-800"
                                         }`}
-                                    onClick={() => catEditsetID(category.id)}
+                                    onClick={() => catEditsetID(category.id, category.Name)}
                                 >
                                     Edit
                                 </button>
@@ -731,7 +738,7 @@ const Inventory = () => {
                                                             ? "text-white  bg-blue-800  hover:bg-blue-600   "
                                                             : "bg-blue-600 text-white   hover:bg-blue-800"
                                                         }`}
-                                                    onClick={() => itemEditsetID(item.id)}
+                                                    onClick={() => itemEditsetID(item.id, item.Name, item.Stock, item.Price, item.Category, item.Unit, item.Code)}
                                                 >
                                                     Edit
                                                 </button>
