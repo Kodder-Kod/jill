@@ -187,7 +187,7 @@ const Inventory = () => {
 
     const [catEditID, setCatEditId] = useState()
 
-    const catEditsetID = (id,jina) => {
+    const catEditsetID = (id, jina) => {
 
         catModalFunBtnEdit()
 
@@ -832,10 +832,9 @@ const Inventory = () => {
                                     </option>
 
                                     <>
-
-                                        <option value="dzn">DZN</option>
-                                        <option value="ctn">CTN</option>
-                                        <option value="ctn">PCS</option>
+                                        <option value="DZN">DZN</option>
+                                        <option value="CTN">CTN</option>
+                                        <option value="PCS">PCS</option>
                                     </>
                                 </select>
 
@@ -974,9 +973,9 @@ const Inventory = () => {
                                     </option>
                                     <>
 
-                                        <option value="dzn">DZN</option>
-                                        <option value="ctn">CTN</option>
-                                        <option value="ctn">PCS</option>
+                                        <option value="DZN">DZN</option>
+                                        <option value="CTN">CTN</option>
+                                        <option value="PCS">PCS</option>
                                     </>
                                 </select>
                             </div>
