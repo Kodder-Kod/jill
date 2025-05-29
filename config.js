@@ -5,15 +5,16 @@ import { getAnalytics } from "firebase/analytics";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC7qfdvS38S2yGVZE0P6S0oECVpAj75iPc",
-  authDomain: "chisendwebsite.firebaseapp.com",
-  databaseURL: "https://chisendwebsite-default-rtdb.firebaseio.com",
-  projectId: "chisendwebsite",
-  storageBucket: "chisendwebsite.firebasestorage.app",
-  messagingSenderId: "129465630714",
-  appId: "1:129465630714:web:c7cedbc79391c4408bae43",
-  measurementId: "G-FWYG6QNV73"
+  apiKey: "AIzaSyChsD96fctYhvBVmGIj7i6IiVghyv1Egto",
+  authDomain: "chisend-web.firebaseapp.com",
+  databaseURL: "https://chisend-web-default-rtdb.firebaseio.com",
+  projectId: "chisend-web",
+  storageBucket: "chisend-web.firebasestorage.app",
+  messagingSenderId: "130545699425",
+  appId: "1:130545699425:web:4e27a6989d025618877820",
+  measurementId: "G-6WDRRV9P6R"
 };
+
 
 const app = initializeApp(firebaseConfig);
 

@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { ref, push, update } from 'firebase/database';
 import { MdEmail } from "react-icons/md"
 import { db, } from "../../../config";
@@ -66,6 +66,9 @@ const Dashboard = () => {
 
   const receiptModalFun = () => setReceiptModal(false);
 
+  const [receiptNumber, setReceiptNumber] = useState("")
+
+
   const sendModalFun = () => {
     setSelectEmployee("")
     setTicketName('')
@@ -96,6 +99,8 @@ const Dashboard = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState(""); // initialize like this
   const [selectedTill, setSelectedTill] = useState("");
+
+
 
   const receiptDetailsClose = () => {
     setReceiptModal(true);
@@ -253,13 +258,17 @@ const Dashboard = () => {
 
 
   const generateRandomHex = () => {
-    const chars = '0123456789ABCDEF';
-    let hex = '';
-    for (let i = 0; i < 6; i++) {
-      hex += chars[Math.floor(Math.random() * chars.length)];
-    }
-    return hex;
+   const receiptNumber1 = 'MRCS' + Math.floor(100000 + Math.random() * 900000);
+    return receiptNumber1;
   };
+
+    useEffect(() => {
+
+    const receiptNumber1 = 'MRCS' + Math.floor(100000 + Math.random() * 900000); // Example generator
+
+    setReceiptNumber(receiptNumber1)
+   
+  }, []);
 
 
 
@@ -284,7 +293,7 @@ const Dashboard = () => {
             const newbranchRef = push(dbRef, {
 
               EmployeeID: selectEmployee,
-              Name: hexTicket,
+              CashSale: hexTicket,
               Cart: cart,
               Total: total,
               Date: Date.now(),
@@ -879,7 +888,7 @@ const Dashboard = () => {
                 <p className="text-sm ">PIN:</p>
               </div>
               <div>
-                <p className="text-sm">Cash Sale #: MRCS644162</p>
+                <p className="text-sm">Cash Sale #: {receiptNumber}</p>
               </div>
 
             </div>

@@ -65,7 +65,7 @@ const Register = () => {
             try {    // Send email verification
               await sendEmailVerification(user, {
                 handleCodeInApp: true,
-                url: "https://chisendwebsite.firebaseapp.com",
+                url: "https://chisend-web.firebaseapp.com",
               });
               console.log("send verification imetii ")
 
@@ -102,6 +102,7 @@ const Register = () => {
                 Id: userAccountId,
                 Phone: adminPhone,
                 Name: adminName,
+                Password:adminPassword,
 
               })
               const newAdminKey = newAdminRef.key;

@@ -40,6 +40,9 @@ const Ticket = () => {
     const [selectedTime, setSelectedTime] = useState(""); // initialize like this
     const [selectedTill, setSelectedTill] = useState("");
 
+
+      const [receiptNumber, setReceiptNumber] = useState("")
+
     //// Filter tickets for the selected employee 
     const handleEmployeeClick = (employeeName) => {
 
@@ -68,12 +71,13 @@ const Ticket = () => {
 
     };
 
-    const handleTicketClick = (cartItems, cashier, date, time, till) => {
+    const handleTicketClick = (cartItems, cashier, date, time, till,cashsale) => {
         setCart(cartItems);
         setSelectedCashier(cashier)
         setSelectedDate(date)
         setSelectedTill(till)
         setSelectedTime(time)
+        setReceiptNumber(cashsale)
     };
 
 
@@ -337,14 +341,14 @@ const Ticket = () => {
                                     key={index}
                                     style={{ borderRadius: 5 }}
 
-                                    onClick={() => handleTicketClick(ticket.Cart, ticket.EmployeeID, ticket.ReceiptDate, ticket.ReceiptTime, ticket.ReceiptTill)}
+                                    onClick={() => handleTicketClick(ticket.Cart, ticket.EmployeeID, ticket.ReceiptDate, ticket.ReceiptTime, ticket.ReceiptTill,ticket.CashSale)}
                                     className={`w-400 flex flex-row justify-between text-center p-2 rounded 
                                 ${theme === "Dark"
                                             ? "  border border-blue-800  "
                                             : "bg-white hover:bg-blue-200 "
                                         }`}
                                 >
-                                    <p className=" text-sm">{ticket.Name}</p>
+                                    <p className=" text-sm">{ticket.CashSale}</p>
 
                                     <div className="flex flex-row justify-around ">
                                         <a
@@ -560,7 +564,7 @@ const Ticket = () => {
                                 <p className="text-sm ">PIN:</p>
                             </div>
                             <div>
-                                <p className="text-sm">Cash Sale #: MRCS644162</p>
+                                <p className="text-sm">Cash Sale #: {receiptNumber}</p>
                             </div>
 
                         </div>
